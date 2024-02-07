@@ -77,14 +77,14 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           // Content
           Positioned(
-            top: 180,
+            top: 167,
             left: 0,
             right: 0,
             child: Container(
-              padding: const EdgeInsets.fromLTRB(20.0,20.0,20.0,270.0),
+              padding: const EdgeInsets.fromLTRB(20.0,20.0,20.0,285.0),
               decoration: BoxDecoration(
-                color: Colors.black,
-                borderRadius: BorderRadius.circular(10.0),
+                color: Colors.grey[900],
+                borderRadius: BorderRadius.circular(30.0),
               ),
               child: ListView(
                 shrinkWrap: true,
