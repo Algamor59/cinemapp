@@ -44,6 +44,7 @@ class _MovieExplorerHomePageState extends State<MovieExplorerHomePage> {
   Future<void> fetchMovies() async {
     try {
     final List<Movie>? fetchedMovies = await MovieService.fetchMovies();
+    
 
     if (fetchedMovies != null) {
       setState(() {

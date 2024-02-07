@@ -17,4 +17,17 @@ class MovieService {
       throw Exception('Failed to fetch movies');
     }
   }
+
+  static Future<List<Map<String, dynamic>>> fetchGenres() async {
+    //for each
+    final response = await http.get(Uri.parse('${ApiConfig.baseUrl}/genre/{Liste[i]}?api_key=${ApiConfig.apiKey}'));
+    //return response;
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      final List<dynamic> genres = data['genres'];
+      return genres.cast<Map<String, dynamic>>(); // Cast each genre to a Map<String, dynamic>
+    } else {
+      throw Exception('Failed to fetch genres');
+    }
+  }
 }
