@@ -102,7 +102,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     style: const TextStyle(color: Colors.white),
                     decoration: const InputDecoration(
                       border: UnderlineInputBorder(),
-                      labelText: 'Enter your email',
+                      labelText: 'Nickname',
                       labelStyle: TextStyle(color: Colors.white),
                     ),
                   ),
@@ -110,7 +110,23 @@ class _MyHomePageState extends State<MyHomePage> {
                     style: const TextStyle(color: Colors.white),
                     decoration: const InputDecoration(
                       border: UnderlineInputBorder(),
-                      labelText: 'Enter your password',
+                      labelText: 'Email',
+                      labelStyle: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                  TextFormField(
+                    style: const TextStyle(color: Colors.white),
+                    decoration: const InputDecoration(
+                      border: UnderlineInputBorder(),
+                      labelText: 'Password',
+                      labelStyle: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                  TextFormField(
+                    style: const TextStyle(color: Colors.white),
+                    decoration: const InputDecoration(
+                      border: UnderlineInputBorder(),
+                      labelText: 'Enter your password again',
                       labelStyle: TextStyle(color: Colors.white),
                     ),
                   ),
