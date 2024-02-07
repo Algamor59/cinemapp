@@ -25,7 +25,7 @@ width: 60,
           ),
           title: Text(movie.title),
 subtitle: Text(movie.overview),
-          trailing: Text('Rating: ${movie.voteAverage}'),
+           trailing: Text('Rating: ${movie.voteAverage}'),
         );
       },
     );

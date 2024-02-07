@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tmdb_api/tmdb_api.dart';
+//import 'package:tmdb_api/tmdb_api.dart';
 import 'movie_list_view.dart';
 import 'movie_service.dart';
 import 'models/movie.dart';
@@ -10,7 +10,7 @@ void main() {
 
 
 class MovieExplorerApp extends StatelessWidget {
-  const MovieExplorerApp({super.key});
+  const MovieExplorerApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -43,15 +43,21 @@ class _MovieExplorerHomePageState extends State<MovieExplorerHomePage> {
 
   Future<void> fetchMovies() async {
     try {
-      final List<Movie> fetchedMovies = await MovieService.fetchMovies();
+    final List<Movie>? fetchedMovies = await MovieService.fetchMovies();
+
+    if (fetchedMovies != null) {
       setState(() {
         movies = fetchedMovies;
       });
-    } catch (e) {
-      // ignore: avoid_print
-      print('Error fetching movies: $e');
+    } else {
+      // Gérer le cas où les données sont nulles
+      // Peut-être afficher un message d'erreur à l'utilisateur
     }
+  } catch (e) {
+    // ignore: avoid_print
+    print('Error fetching movies: $e');
   }
+}
 
   @override
   Widget build(BuildContext context) {
