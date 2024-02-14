@@ -1,36 +1,14 @@
 import 'package:flutter/material.dart';
-import 'loginPage.dart'; // Importez la page LoginPage
-
-void main() {
-  runApp(const CreateAccountPage());
-}
+import 'package:tmdb_api/tmdb_api.dart';
+import 'homePage.dart'; // Importez la page HomePage
+import 'loginPage.dart'; // Importez la page HomePage
+import 'main.dart';
+import 'models/movie.dart';
 
 class CreateAccountPage extends StatelessWidget {
-  const CreateAccountPage({Key? key}) : super(key: key);
+  final List<Movie> movies;
+  const CreateAccountPage({super.key, required this.movies});
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Cinemapp',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -107,6 +85,13 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: FloatingActionButton(
                       onPressed: () {
                         // Action à effectuer lors de l'appui sur le bouton "Create Account"
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => MovieListView(
+                                    movies: this.movies,
+                                  )),
+                        );
                       },
                       child: const Text("Create Account"),
                     ),
@@ -116,9 +101,10 @@ class _MyHomePageState extends State<MyHomePage> {
                     padding: const EdgeInsets.only(top: 10.0),
                     child: GestureDetector(
                       onTap: () {
+                        // Action à effectuer lors de l'appui sur le bouton "Already have an account ?"
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => LoginPage()),
+                          MaterialPageRoute(builder: (context) => LoginPage(movies : movies)),
                         );
                       },
                       child: Text(

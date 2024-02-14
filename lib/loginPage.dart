@@ -1,36 +1,10 @@
 import 'package:flutter/material.dart';
 import 'createAccountPage.dart'; // Importer la nouvelle page CreateAccountPage
-
-void main() {
-  runApp(const LoginPage());
-}
+import 'models/movie.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Cinemapp',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
+  final List<Movie> movies;
+  const LoginPage({super.key, required this.movies});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,7 +27,7 @@ class _MyHomePageState extends State<MyHomePage> {
             left: 0,
             right: 0,
             child: Container(
-              padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 285.0),
+              padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 315.0),
               decoration: BoxDecoration(
                 color: Colors.grey[900],
                 borderRadius: BorderRadius.circular(30.0),
@@ -103,7 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => CreateAccountPage()),
+                              builder: (context) => CreateAccountPage(movies: movies,)),
                         );
                       },
                       child: Text(
