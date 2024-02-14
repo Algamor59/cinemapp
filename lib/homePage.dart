@@ -23,7 +23,7 @@ class MovieListView extends StatelessWidget {
           ),
           NavigationDestination(
             icon: Icon(
-              Icons.person,
+              Icons.favorite_border,
               color: Colors.deepPurple,
             ),
             label: '',
@@ -49,42 +49,91 @@ class MovieListView extends StatelessWidget {
             right: 0,
             child: Container(
               padding: const EdgeInsets.fromLTRB(10.0, 30.0, 10.0, 30),
+              height: 800,
+              width: 200,
               decoration: BoxDecoration(
                 color: Colors.grey[900],
                 borderRadius: BorderRadius.circular(30.0),
               ),
-              child: ListView.builder(
-                itemCount: 8,
-                itemBuilder: (context, index) {
+              child: GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 8.0,
+                  mainAxisSpacing: 8.0,
+                ),
+                itemCount: 4,
+                itemBuilder: (BuildContext context, int index) {
                   final movie = movies[index];
                   String genres = "";
                   movie.genre.forEach((element) {
                     genres += element.name + ", ";
                   });
                   genres = genres.substring(0, genres.length - 2);
-                  return ListTile(
-                    leading: CachedNetworkImage(
-                      imageUrl: '${ApiConfig.imageBaseUrl}${movie.posterPath}',
-                      width: 60,
-                      height: 90,
-                      fit: BoxFit.cover,
-                      placeholder: (context, url) =>
-                          const CircularProgressIndicator(
-                        color: Colors.deepPurple,
-                      ),
-                      errorWidget: (context, url, error) =>
-                          const Icon(Icons.error),
+                  return Card(
+                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
                     ),
-                    title: Text(
-                      movie.title,
-                      style: TextStyle(color: Colors.white),
+                    child: Stack(
+                      fit: StackFit.expand,
+                      children: [
+                        CachedNetworkImage(
+                          imageUrl:
+                              '${ApiConfig.imageBaseUrl}${movie.posterPath}',
+                          fit: BoxFit.cover,
+                          // C'est pour de la gestion d'erreur et le temps de chargement
+                          placeholder: (context, url) =>
+                              const CircularProgressIndicator(
+                            color: Colors.deepPurple,
+                          ),
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.error),
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                Colors.transparent,
+                                Colors.black.withOpacity(0.7)
+                              ],
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          bottom: 10.0,
+                          left: 18.0,
+                          right: 8.0,
+                          child: Text(
+                            movie.title,
+                            style: TextStyle(
+                                fontSize: 16.0,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                      ],
                     ),
-                    subtitle:
-                        Text(genres, style: TextStyle(color: Colors.white)),
-                    trailing: Text('Rating: ${movie.voteAverage}',
-                        style: TextStyle(color: Colors.white)),
                   );
                 },
+              ),
+            ),
+          ),
+          Positioned(
+            top: 140,
+            left: 15,
+            right: 15,
+            child: TextField(
+              decoration: InputDecoration(
+                labelText: 'Search genres, movies, actors...',
+                filled: true,
+                fillColor: Colors.white,
+                prefixIcon: const Icon(Icons.search),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide: const BorderSide(color: Colors.deepPurple),
+                ),
               ),
             ),
           ),
