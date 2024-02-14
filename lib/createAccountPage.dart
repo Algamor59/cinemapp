@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'loginPage.dart'; // Importez la page LoginPage
-
-void main() {
-  runApp(const CreateAccountPage());
-}
+import 'package:tmdb_api/tmdb_api.dart';
+import 'homePage.dart'; // Importez la page HomePage
+import 'loginPage.dart'; // Importez la page HomePage
+import 'main.dart';
+import 'models/movie.dart';
 
 class CreateAccountPage extends StatelessWidget {
-  const CreateAccountPage({Key? key}) : super(key: key);
+  final List<Movie> movies;
+  const CreateAccountPage({super.key, required this.movies});
 
   @override
   Widget build(BuildContext context) {
@@ -107,6 +108,13 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: FloatingActionButton(
                       onPressed: () {
                         // Action à effectuer lors de l'appui sur le bouton "Create Account"
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => MovieListView(
+                                    movies: this.movies,
+                                  )),
+                        );
                       },
                       child: const Text("Create Account"),
                     ),
@@ -116,6 +124,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     padding: const EdgeInsets.only(top: 10.0),
                     child: GestureDetector(
                       onTap: () {
+                        // Action à effectuer lors de l'appui sur le bouton "Already have an account ?"
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) => LoginPage()),

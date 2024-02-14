@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'createAccountPage.dart'; // Importer la nouvelle page CreateAccountPage
-
-void main() {
-  runApp(const LoginPage());
-}
+import 'models/movie.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  final List<Movie> movies;
+  const LoginPage({super.key, required this.movies});
 
   @override
   Widget build(BuildContext context) {
