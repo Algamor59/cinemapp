@@ -44,6 +44,22 @@ class MovieListView extends StatelessWidget {
             ),
           ),
           Positioned(
+            top: 50,
+            left: 50,
+            right: 50,
+            child: Container(
+              width: 10,
+              height: 70,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(30.0),
+              ),
+              child: const Image(
+                image: AssetImage('assets/images/cinemapplogo.png'),
+              ),
+            ),
+          ),
+          Positioned(
             top: 167,
             left: 0,
             right: 0,
