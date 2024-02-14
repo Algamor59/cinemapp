@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'loginPage.dart'; // Importer la page de connexion
+import 'favoritePage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -38,7 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
     Future.delayed(Duration.zero, () {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => LoginPage()),
+        MaterialPageRoute(builder: (context) => FavoritePage()),
       );
     });
   }
