@@ -39,7 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
     Future.delayed(Duration.zero, () {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => FavoritePage()),
+        MaterialPageRoute(builder: (context) => LoginPage()),
       );
     });
   }

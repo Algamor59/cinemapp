@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'createAccountPage.dart'; // Importer la nouvelle page CreateAccountPage
+import 'loginPage.dart'; // Importez la page LoginPage
 
 void main() {
-  runApp(const LoginPage());
+  runApp(const CreateAccountPage());
 }
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({Key? key}) : super(key: key);
+class CreateAccountPage extends StatelessWidget {
+  const CreateAccountPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -74,6 +74,14 @@ class _MyHomePageState extends State<MyHomePage> {
                     style: const TextStyle(color: Colors.white),
                     decoration: const InputDecoration(
                       border: UnderlineInputBorder(),
+                      labelText: 'Enter your pseudonyme',
+                      labelStyle: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                  TextFormField(
+                    style: const TextStyle(color: Colors.white),
+                    decoration: const InputDecoration(
+                      border: UnderlineInputBorder(),
                       labelText: 'Enter your email',
                       labelStyle: TextStyle(color: Colors.white),
                     ),
@@ -86,28 +94,35 @@ class _MyHomePageState extends State<MyHomePage> {
                       labelStyle: TextStyle(color: Colors.white),
                     ),
                   ),
+                  TextFormField(
+                    style: const TextStyle(color: Colors.white),
+                    decoration: const InputDecoration(
+                      border: UnderlineInputBorder(),
+                      labelText: 'Enter your password again',
+                      labelStyle: TextStyle(color: Colors.white),
+                    ),
+                  ),
                   Padding(
                     padding: const EdgeInsets.only(top: 20.0),
                     child: FloatingActionButton(
                       onPressed: () {
-                        // Action à effectuer lors de l'appui sur le bouton "Sign in with email"
+                        // Action à effectuer lors de l'appui sur le bouton "Create Account"
                       },
-                      child: const Text("Sign in with email"),
+                      child: const Text("Create Account"),
                     ),
                   ),
-                  // Bouton "Create account" menant à la page CreateAccountPage
+                  // Bouton "Already have an account ?" menant à la page LoginPage
                   Padding(
                     padding: const EdgeInsets.only(top: 10.0),
                     child: GestureDetector(
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(
-                              builder: (context) => CreateAccountPage()),
+                          MaterialPageRoute(builder: (context) => LoginPage()),
                         );
                       },
                       child: Text(
-                        "Create account",
+                        "Already have an account ?",
                         style: TextStyle(color: Colors.white),
                       ),
                     ),

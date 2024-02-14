@@ -2,72 +2,177 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http; // Importer le package HTTP
 import 'dart:convert'; // Importer la bibliothèque dart:convert
 
-
 void main() {
   runApp(const FavoritePage());
 }
 
-class Movie {
-  final int id;
-  final String title;
-  final String imageUrl;
+class FavoritePage extends StatelessWidget {
+  const FavoritePage({super.key});
 
-  Movie({required this.id, required this.title, required this.imageUrl});
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Cinemapp',
+      theme: ThemeData(
+        // This is the theme of your application.
+        //
+        // TRY THIS: Try running your application with "flutter run". You'll see
+        // the application has a purple toolbar. Then, without quitting the app,
+        // try changing the seedColor in the colorScheme below to Colors.green
+        // and then invoke "hot reload" (save your changes or press the "hot
+        // reload" button in a Flutter-supported IDE, or press "r" if you used
+        // the command line to start the app).
+        //
+        // Notice that the counter didn't reset back to zero; the application
+        // state is not lost during the reload. To reset the state, use hot
+        // restart instead.
+        //
+        // This works for code too, not just values: Most code changes can be
+        // tested with just a hot reload.
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
+      ),
+      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+    );
+  }
 }
 
-class FavoritePage extends StatelessWidget {
-  const FavoritePage({Key? key}) : super(key: key);
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key, required this.title});
 
-  Future<List<Movie>> fetchFavoriteMovies() async {
-    // Récupérer la liste de films favoris depuis votre base de données Alwaysdata
-    // Exemple d'URL hypothétique pour récupérer les favoris
-    final response = await http.get(Uri.parse('https://example.com/favorites'));
-    
-    if (response.statusCode == 200) {
-      // Analyser la réponse JSON et construire la liste de films
-      List<Movie> movies = [];
-      // Exemple d'analyse JSON hypothétique
-      List<dynamic> data = json.decode(response.body);
-      data.forEach((item) {
-        movies.add(Movie(id: item['id'], title: item['title'], imageUrl: item['imageUrl']));
-      });
-      return movies;
-    } else {
-      // Gérer les erreurs de requête
-      throw Exception('Failed to load favorite movies');
-    }
-  }
+  // This widget is the home page of your application. It is stateful, meaning
+  // that it has a State object (defined below) that contains fields that affect
+  // how it looks.
+
+  // This class is the configuration for the state. It holds the values (in this
+  // case the title) provided by the parent (in this case the App widget) and
+  // used by the build method of the State. Fields in a Widget subclass are
+  // always marked "final".
+
+  final String title;
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  get onPressed => null;
+
+  get child => null;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Favorite Movies'),
-      ),
-      body: FutureBuilder<List<Movie>>(
-        future: fetchFavoriteMovies(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          } else if (snapshot.hasData) {
-            return ListView.builder(
-              itemCount: snapshot.data!.length,
-              itemBuilder: (context, index) {
-                final movie = snapshot.data![index];
-                return ListTile(
-                  leading: Image.network(movie.imageUrl),
-                  title: Text(movie.title),
-                  // Vous pouvez ajouter d'autres éléments ici comme la date de sortie, la note, etc.
+        leading: IconButton(
+          icon: const Icon(Icons.navigate_before),
+          tooltip: 'Go back',
+          onPressed: () {
+            Navigator.push(context, MaterialPageRoute<void>(
+              builder: (BuildContext context) {
+                return Scaffold(
+                  appBar: AppBar(
+                    title: const Text('Next page'),
+                  ),
+                  body: const Center(
+                    child: Text(
+                      'This is the next page',
+                      style: TextStyle(fontSize: 24),
+                    ),
+                  ),
                 );
               },
-            );
-          } else {
-            return Center(child: Text('No data'));
-          }
-        },
+            ));
+          },
+        ),
+        title: const Center(child: Text("favorites")),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.info_outline),
+            tooltip: 'Add Favorites',
+            onPressed: () {
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(const SnackBar(content: Text('GNGNGNGNGNGN')));
+            },
+          ),
+        ],
       ),
+      body: Stack(
+        children: [
+          Container(
+            padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 20.0),
+            decoration: BoxDecoration(
+              color: Colors.grey[900],
+            ),
+            child: ListView(
+              shrinkWrap: true,
+              children: const [
+                Image(
+                  image: AssetImage('assets/images/poster_template.jpg'),
+                  height: 350,
+                  //fit: BoxFit.contain,
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 0.0),
+                  child: Text(
+                    "Overview",
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                ),
+                Text(
+                  "LOREM IPSUM LOREM IPSUM LOREM IPSUM LOREM IPSUM LOREM IPSUM LOREM IPSUM",
+                  style: TextStyle(color: Colors.white),
+                ),
+                Divider(
+                  height: 30,
+                  color: Colors.purple,
+                ),
+                Text("Genre",
+                    style: TextStyle(color: Colors.white, fontSize: 20)),
+                Text(
+                  "Thriller",
+                  style: TextStyle(color: Colors.white),
+                ),
+                Divider(
+                  height: 30,
+                  color: Colors.purple,
+                ),
+                Text("Producer",
+                    style: TextStyle(color: Colors.white, fontSize: 20)),
+                Text(
+                  "Jordan Peele",
+                  style: TextStyle(color: Colors.white),
+                ),
+                Divider(
+                  height: 30,
+                  color: Colors.purple,
+                ),
+                Text("Release date",
+                    style: TextStyle(color: Colors.white, fontSize: 20)),
+                Text(
+                  "2023-12-01",
+                  style: TextStyle(color: Colors.white),
+                ),
+                Divider(
+                  height: 30,
+                  color: Colors.purple,
+                ),
+                Text("Average Note",
+                    style: TextStyle(color: Colors.white, fontSize: 20)),
+                Text(
+                  "9/10",
+                  style: TextStyle(color: Colors.white),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+      floatingActionButton: const FloatingActionButton(
+          tooltip: 'Add to favorite',
+          child: Icon(Icons.favorite),
+          onPressed: null),
     );
   }
 }
