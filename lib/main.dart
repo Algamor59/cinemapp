@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-//import 'package:tmdb_api/tmdb_api.dart';
-import 'movie_list_view.dart';
+import 'homePage.dart';
 import 'movie_service.dart';
 import 'models/movie.dart';
 void main() {
@@ -63,9 +62,6 @@ class _MovieExplorerHomePageState extends State<MovieExplorerHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Movie Explorer'),
-      ),
       body: MovieListView(movies: movies),
     );
   }
