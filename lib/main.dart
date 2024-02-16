@@ -14,12 +14,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Cinemapp',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Cinemapp'),
     );
   }
 }
@@ -35,33 +35,29 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   List<Movie> movies = [];
+  bool isDataLoaded = false;
+
   @override
   void initState() {
     super.initState();
+    //Charger tout les films provenant de l'API
     fetchMovies();
-    // Rediriger automatiquement vers la page de connexion
-    Future.delayed(Duration.zero, () {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => LoginPage(movies: movies)),
-      );
-    });
   }
 
   Future<void> fetchMovies() async {
     try {
-      final List<Movie>? fetchedMovies = await MovieService.fetchMovies();
+      final List<Movie> fetchedMovies = await MovieService.fetchMovies();
 
       if (fetchedMovies != null) {
         setState(() {
           movies = fetchedMovies;
+          isDataLoaded = true;
         });
       } else {
+        print('Error fetching movies, we dont know why yet');
         // Gérer le cas où les données sont nulles
-        // Peut-être afficher un message d'erreur à l'utilisateur
       }
     } catch (e) {
-      // ignore: avoid_print
       print('Error fetching movies: $e');
     }
   }
@@ -69,13 +65,9 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Text('Redirecting to Login Page...'),
-      ),
+      body: isDataLoaded
+          ? LoginPage(movies: movies) // Afficher LoginPage uniquement lorsque les données sont prêtes
+          : const CircularProgressIndicator()
     );
   }
 }

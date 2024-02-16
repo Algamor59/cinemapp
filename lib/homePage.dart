@@ -81,11 +81,18 @@ class MovieListView extends StatelessWidget {
                 itemBuilder: (BuildContext context, int index) {
                   final movie = movies[index];
                   String genres = "";
-                  movie.genre.forEach((element) {
-                    genres += element.name + ", ";
-                  });
+                  for (var element in movie.genre) {
+                    genres += "${element.name}, ";
+                  }
                   genres = genres.substring(0, genres.length - 2);
-                  return Card(
+                  return GestureDetector(
+                      onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => filmPage(movie: movie,)),
+                    );
+                  },child: Card(
                     clipBehavior: Clip.antiAliasWithSaveLayer,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
@@ -123,7 +130,7 @@ class MovieListView extends StatelessWidget {
                           right: 8.0,
                           child: Text(
                             movie.title,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 16.0,
                                 color: Colors.white,
                                 fontWeight: FontWeight.w600),
