@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'createAccountPage.dart'; // Importer la nouvelle page CreateAccountPage
 import 'homePage.dart';
 import 'models/movie.dart';
@@ -25,7 +26,7 @@ class LoginPage extends StatelessWidget {
               fit: BoxFit.cover,
             ),
           ),
-          // Content
+          // Container Grey
           Positioned(
             top: 167,
             left: 0,
@@ -47,13 +48,14 @@ class LoginPage extends StatelessWidget {
                       height: 50,
                     ),
                   ),
-                  // TextFields
+                  // Form
                   Form(
                     key: _formKey,
                     child: Column(
                       children: [
                         TextFormField(
                           style: const TextStyle(color: Colors.white),
+                          //Validation of value not empty
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please enter your email';
@@ -68,6 +70,7 @@ class LoginPage extends StatelessWidget {
                         ),
                         TextFormField(
                           style: const TextStyle(color: Colors.white),
+                          //Validation of value not empty
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please enter your password';
@@ -83,6 +86,7 @@ class LoginPage extends StatelessWidget {
                       ],
                     ),
                   ),
+                  //Button for validate the form
                   Padding(
                     padding: const EdgeInsets.only(top: 20.0),
                     child: FloatingActionButton(
@@ -92,14 +96,13 @@ class LoginPage extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => MovieListView(
-                                  movies: this.movies,
-                                )),
+                                      movies: this.movies,
+                                    )),
                           );
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(content: Text('Login success')),
                           );
                         }
-
                       },
                       child: const Text("Sign in with email"),
                     ),
@@ -117,7 +120,7 @@ class LoginPage extends StatelessWidget {
                                   )),
                         );
                       },
-                      child: Text(
+                      child: const Text(
                         "Create account",
                         style: TextStyle(color: Colors.white),
                       ),

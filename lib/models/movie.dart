@@ -10,17 +10,16 @@ class Movie {
   final List<int> genreIds; // Ajout de la liste des identifiants de genre
   final List<Genre> genre;
 
-
-  Movie({
-    required this.id,
-    required this.title,
-    required this.overview,
-    required this.posterPath,
-    required this.releaseDate,
-    required this.voteAverage,
-    required this.genreIds,
-    List<Genre>? genre
-  }) : genre = genre ?? [];
+  Movie(
+      {required this.id,
+      required this.title,
+      required this.overview,
+      required this.posterPath,
+      required this.releaseDate,
+      required this.voteAverage,
+      required this.genreIds,
+      List<Genre>? genre})
+      : genre = genre ?? [];
 
   factory Movie.fromJson(Map<String, dynamic> json) {
     return Movie(

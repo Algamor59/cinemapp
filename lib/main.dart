@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+
 import 'loginPage.dart'; // Importer la page de connexion
-import 'favoritePage.dart';
-import 'movie_service.dart';
 import 'models/movie.dart';
+import 'movie_service.dart';
 
 void main() {
   runApp(const MyApp());

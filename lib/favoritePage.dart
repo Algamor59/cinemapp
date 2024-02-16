@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http; // Importer le package HTTP
-import 'dart:convert'; // Importer la bibliothèque dart:convert
 
 class FavoritePage extends StatelessWidget {
   const FavoritePage({super.key});
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      //Nav Bar du haut
       appBar: AppBar(
+        //Retour en arrière
         leading: IconButton(
           icon: const Icon(Icons.navigate_before),
           tooltip: 'Go back',

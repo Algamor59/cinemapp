@@ -7,10 +7,18 @@ import 'models/movie.dart';
 
 class MovieService {
   static Future<List<Movie>> fetchMovies() async {
+    //On instancie la liste que l'on va alimenter
     List<Movie> movies = [];
+    // On prepépare l'appel
     final response = await http.get(Uri.parse(
       '${ApiConfig.baseUrl}/movie/popular?api_key=${ApiConfig.apiKey}',
     ));
+    /**
+     * Si l'appel retourne un status code 200 alors on récupère son body
+     * et on va formater les résultats sous forme d'uin objet
+     * Movie et Genre
+     * Sinon on renvoie une exception Failed to fetch Movies
+     */
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
       final List<dynamic> results = data['results'];

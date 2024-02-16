@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:tmdb_api/tmdb_api.dart';
+
 import 'homePage.dart'; // Importez la page HomePage
 import 'loginPage.dart'; // Importez la page HomePage
-import 'main.dart';
 import 'models/movie.dart';
 
 class CreateAccountPage extends StatelessWidget {
   final List<Movie> movies;
   final _formKey = GlobalKey<FormState>();
+
   CreateAccountPage({super.key, required this.movies});
 
   @override
@@ -26,7 +26,7 @@ class CreateAccountPage extends StatelessWidget {
               fit: BoxFit.cover,
             ),
           ),
-          // Content
+          // Container grey
           Positioned(
             top: 167,
             left: 0,
@@ -48,13 +48,14 @@ class CreateAccountPage extends StatelessWidget {
                       height: 50,
                     ),
                   ),
-                  // TextFields
+                  // Form
                   Form(
                     key: _formKey,
                     child: Column(
                       children: [
                         TextFormField(
                           style: const TextStyle(color: Colors.white),
+                          //Validation of value not empty
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please enter your nickname';
@@ -69,6 +70,7 @@ class CreateAccountPage extends StatelessWidget {
                         ),
                         TextFormField(
                           style: const TextStyle(color: Colors.white),
+                          //Validation of value not empty
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please enter your email';
@@ -83,6 +85,7 @@ class CreateAccountPage extends StatelessWidget {
                         ),
                         TextFormField(
                           style: const TextStyle(color: Colors.white),
+                          //Validation of value not empty
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please enter your password';
@@ -97,6 +100,7 @@ class CreateAccountPage extends StatelessWidget {
                         ),
                         TextFormField(
                           style: const TextStyle(color: Colors.white),
+                          //Validation of value not empty
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please enter your password again';
@@ -112,24 +116,23 @@ class CreateAccountPage extends StatelessWidget {
                       ],
                     ),
                   ),
-
+                  //Button for validate the form
                   Padding(
                     padding: const EdgeInsets.only(top: 20.0),
                     child: FloatingActionButton(
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => MovieListView(
-                                movies: this.movies,
-                              )),
-                        );
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Account created')),
-                        );
-                      }
-
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => MovieListView(
+                                      movies: this.movies,
+                                    )),
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('Account created')),
+                          );
+                        }
                       },
                       child: const Text("Create Account"),
                     ),
@@ -142,7 +145,8 @@ class CreateAccountPage extends StatelessWidget {
                         // Action à effectuer lors de l'appui sur le bouton "Already have an account ?"
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => LoginPage(movies : movies)),
+                          MaterialPageRoute(
+                              builder: (context) => LoginPage(movies: movies)),
                         );
                       },
                       child: const Text(
