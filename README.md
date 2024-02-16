@@ -1,16 +1,28 @@
-# cinemapp_app
+##Cinemapp
+Cinemapp est une application mobile qui vous permet de rechercher, explorer et sauvegarder vos films préférés.
 
-A new Flutter project.
+#Fonctionnalités principales
+Recherche de films : Trouvez des films par titre, mots-clés ou genres.
+Exploration des détails : Consultez des informations détaillées sur chaque film, telles que la description, la note, la date de sortie, etc.
+Ajout aux favoris : Enregistrez vos films préférés pour y accéder facilement plus tard.
+Navigation simple : Une interface utilisateur intuitive pour une expérience utilisateur fluide.
+Captures d'écran
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+#Installation
+Cloner ce dépôt :
+#####git clone https://github.com/votre-utilisateur/cinemapp.git
 
-A few resources to get you started if this is your first Flutter project:
+Accédez au répertoire du projet :
+#####cd cinemapp
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Installez les dépendances :
+#####flutter pub get
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Exécutez l'application :
+#####flutter run
+
+#Dépendances
+Flutter - SDK pour le développement d'applications multiplateformes.
+http - Package Flutter pour effectuer des requêtes HTTP.
+flutter_svg - Package Flutter pour afficher des images SVG.
