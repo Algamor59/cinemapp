@@ -1,6 +1,7 @@
 import 'package:cinemapp_app/api_config.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'filmPage.dart';
 import 'models/movie.dart';
 
 class MovieListView extends StatelessWidget {
@@ -72,12 +73,13 @@ class MovieListView extends StatelessWidget {
                 borderRadius: BorderRadius.circular(30.0),
               ),
               child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate:
+                    const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   crossAxisSpacing: 8.0,
                   mainAxisSpacing: 8.0,
                 ),
-                itemCount: 4,
+                itemCount: 6,
                 itemBuilder: (BuildContext context, int index) {
                   final movie = movies[index];
                   String genres = "";
@@ -86,57 +88,62 @@ class MovieListView extends StatelessWidget {
                   }
                   genres = genres.substring(0, genres.length - 2);
                   return GestureDetector(
-                      onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => filmPage(movie: movie,)),
-                    );
-                  },child: Card(
-                    clipBehavior: Clip.antiAliasWithSaveLayer,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    child: Stack(
-                      fit: StackFit.expand,
-                      children: [
-                        CachedNetworkImage(
-                          imageUrl:
-                              '${ApiConfig.imageBaseUrl}${movie.posterPath}',
-                          fit: BoxFit.cover,
-                          // C'est pour de la gestion d'erreur et le temps de chargement
-                          placeholder: (context, url) =>
-                              const CircularProgressIndicator(
-                            color: Colors.deepPurple,
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => filmPage(
+                                  movie: movie,
+                                  movies: movies,
+                                )),
+                      );
+                    },
+                    child: Card(
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      child: Stack(
+                        fit: StackFit.expand,
+                        children: [
+                          CachedNetworkImage(
+                            imageUrl:
+                                '${ApiConfig.imageBaseUrl}${movie.posterPath}',
+                            fit: BoxFit.cover,
+                            // C'est pour de la gestion d'erreur et le temps de chargement
+                            placeholder: (context, url) =>
+                                const CircularProgressIndicator(
+                              color: Colors.deepPurple,
+                            ),
+                            errorWidget: (context, url, error) =>
+                                const Icon(Icons.error),
                           ),
-                          errorWidget: (context, url, error) =>
-                              const Icon(Icons.error),
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: [
-                                Colors.transparent,
-                                Colors.black.withOpacity(0.7)
-                              ],
+                          Container(
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                colors: [
+                                  Colors.transparent,
+                                  Colors.black.withOpacity(0.7)
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                        Positioned(
-                          bottom: 10.0,
-                          left: 18.0,
-                          right: 8.0,
-                          child: Text(
-                            movie.title,
-                            style: const TextStyle(
-                                fontSize: 16.0,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w600),
+                          Positioned(
+                            bottom: 10.0,
+                            left: 18.0,
+                            right: 8.0,
+                            child: Text(
+                              movie.title,
+                              style: const TextStyle(
+                                  fontSize: 16.0,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w600),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   );
                 },

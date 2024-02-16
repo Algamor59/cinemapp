@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'createAccountPage.dart'; // Importer la nouvelle page CreateAccountPage
+import 'homePage.dart';
 import 'models/movie.dart';
 
 class LoginPage extends StatelessWidget {
   final List<Movie> movies;
-  const LoginPage({super.key, required this.movies});
+  final _formKey = GlobalKey<FormState>();
+
+  LoginPage({super.key, required this.movies});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,27 +48,58 @@ class LoginPage extends StatelessWidget {
                     ),
                   ),
                   // TextFields
-                  TextFormField(
-                    style: const TextStyle(color: Colors.white),
-                    decoration: const InputDecoration(
-                      border: UnderlineInputBorder(),
-                      labelText: 'Enter your email',
-                      labelStyle: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                  TextFormField(
-                    style: const TextStyle(color: Colors.white),
-                    decoration: const InputDecoration(
-                      border: UnderlineInputBorder(),
-                      labelText: 'Enter your password',
-                      labelStyle: TextStyle(color: Colors.white),
+                  Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        TextFormField(
+                          style: const TextStyle(color: Colors.white),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your email';
+                            }
+                            return null;
+                          },
+                          decoration: const InputDecoration(
+                            border: UnderlineInputBorder(),
+                            labelText: 'Enter your email',
+                            labelStyle: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                        TextFormField(
+                          style: const TextStyle(color: Colors.white),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your password';
+                            }
+                            return null;
+                          },
+                          decoration: const InputDecoration(
+                            border: UnderlineInputBorder(),
+                            labelText: 'Enter your password',
+                            labelStyle: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 20.0),
                     child: FloatingActionButton(
                       onPressed: () {
-                        // Action à effectuer lors de l'appui sur le bouton "Sign in with email"
+                        if (_formKey.currentState!.validate()) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => MovieListView(
+                                  movies: this.movies,
+                                )),
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('Login success')),
+                          );
+                        }
+
                       },
                       child: const Text("Sign in with email"),
                     ),
@@ -77,7 +112,9 @@ class LoginPage extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => CreateAccountPage(movies: movies,)),
+                              builder: (context) => CreateAccountPage(
+                                    movies: movies,
+                                  )),
                         );
                       },
                       child: Text(

@@ -1,97 +1,46 @@
 import 'package:flutter/material.dart';
-
-void main() {
-  runApp(const filmPage());
-}
+import 'package:cached_network_image/cached_network_image.dart';
+import 'api_config.dart';
+import 'models/movie.dart';
+import 'homePage.dart';
 
 class filmPage extends StatelessWidget {
-  const filmPage({super.key});
+  final Movie movie;
 
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Cinemapp',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
+  final List<Movie> movies;
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  get onPressed => null;
-
-  get child => null;
+  const filmPage({super.key, required this.movie, required this.movies});
 
   @override
   Widget build(BuildContext context) {
+    String genres = "";
+    for (var element in movie.genre) {
+      genres += "${element.name}, ";
+    }
+    genres = genres.substring(0, genres.length - 2);
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.navigate_before),
           tooltip: 'Go back',
           onPressed: () {
-            Navigator.push(context, MaterialPageRoute<void>(
-              builder: (BuildContext context) {
-                return Scaffold(
-                  appBar: AppBar(
-                    title: const Text('Next page'),
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MovieListView(
+                    movies: movies,
                   ),
-                  body: const Center(
-                    child: Text(
-                      'This is the next page',
-                      style: TextStyle(fontSize: 24),
-                    ),
-                  ),
-                );
-              },
-            ));
+                ));
           },
         ),
-        title: const Center(child: Text("title")),
+        title: Center(child: Text(movie.title)),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.info_outline),
-            tooltip: 'Add Favorites',
+            tooltip: 'Information ULTRA IMPORTANTE',
             onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('GNGNGNGNGNGN')));
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(const SnackBar(content: Text('Banger ce film non ?')));
             },
           ),
         ],
@@ -105,11 +54,18 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             child: ListView(
               shrinkWrap: true,
-              children: const [
-                Image(
-                  image: AssetImage('assets/images/poster_template.jpg'),
+              children: [
+                CachedNetworkImage(
+                  imageUrl:
+                  '${ApiConfig.imageBaseUrl}${movie.posterPath}',
                   height: 350,
-                  //fit: BoxFit.contain,
+                  // C'est pour de la gestion d'erreur et le temps de chargement
+                  placeholder: (context, url) =>
+                  const CircularProgressIndicator(
+                    color: Colors.deepPurple,
+                  ),
+                  errorWidget: (context, url, error) =>
+                  const Icon(Icons.error),
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 0.0),
@@ -119,7 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
                 Text(
-                  "LOREM IPSUM LOREM IPSUM LOREM IPSUM LOREM IPSUM LOREM IPSUM LOREM IPSUM",
+                  movie.overview,
                   style: TextStyle(color: Colors.white),
                 ),
                 Divider(
@@ -129,17 +85,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 Text("Genre",
                     style: TextStyle(color: Colors.white, fontSize: 20)),
                 Text(
-                  "Thriller",
-                  style: TextStyle(color: Colors.white),
-                ),
-                Divider(
-                  height: 30,
-                  color: Colors.purple,
-                ),
-                Text("Producer",
-                    style: TextStyle(color: Colors.white, fontSize: 20)),
-                Text(
-                  "Jordan Peele",
+                  genres,
                   style: TextStyle(color: Colors.white),
                 ),
                 Divider(
@@ -149,7 +95,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 Text("Release date",
                     style: TextStyle(color: Colors.white, fontSize: 20)),
                 Text(
-                  "2023-12-01",
+                  movie.releaseDate,
                   style: TextStyle(color: Colors.white),
                 ),
                 Divider(
@@ -159,20 +105,18 @@ class _MyHomePageState extends State<MyHomePage> {
                 Text("Average Note",
                     style: TextStyle(color: Colors.white, fontSize: 20)),
                 Text(
-                  "9/10",
+                  movie.voteAverage.toString().substring(0,3)+"/10",
                   style: TextStyle(color: Colors.white),
                 ),
               ],
             ),
-
           ),
         ],
       ),
       floatingActionButton: const FloatingActionButton(
-        tooltip: 'Add to favorite',
-        child: Icon(Icons.favorite),
-        onPressed: null
-      ),
+          tooltip: 'Add to favorite',
+          child: Icon(Icons.favorite_border),
+          onPressed: null),
     );
   }
 }

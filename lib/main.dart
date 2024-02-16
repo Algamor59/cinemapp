@@ -65,9 +65,10 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: isDataLoaded
-          ? LoginPage(movies: movies) // Afficher LoginPage uniquement lorsque les données sont prêtes
-          : const CircularProgressIndicator()
-    );
+        body: isDataLoaded
+            ? LoginPage(
+                movies:
+                    movies) // Afficher LoginPage uniquement lorsque les données sont prêtes
+            : const Center(child: CircularProgressIndicator()));
   }
 }

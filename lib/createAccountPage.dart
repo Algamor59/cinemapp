@@ -7,7 +7,8 @@ import 'models/movie.dart';
 
 class CreateAccountPage extends StatelessWidget {
   final List<Movie> movies;
-  const CreateAccountPage({super.key, required this.movies});
+  final _formKey = GlobalKey<FormState>();
+  CreateAccountPage({super.key, required this.movies});
 
   @override
   Widget build(BuildContext context) {
@@ -48,50 +49,87 @@ class CreateAccountPage extends StatelessWidget {
                     ),
                   ),
                   // TextFields
-                  TextFormField(
-                    style: const TextStyle(color: Colors.white),
-                    decoration: const InputDecoration(
-                      border: UnderlineInputBorder(),
-                      labelText: 'Enter your pseudonyme',
-                      labelStyle: TextStyle(color: Colors.white),
+                  Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        TextFormField(
+                          style: const TextStyle(color: Colors.white),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your nickname';
+                            }
+                            return null;
+                          },
+                          decoration: const InputDecoration(
+                            border: UnderlineInputBorder(),
+                            labelText: 'Enter your nickname',
+                            labelStyle: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                        TextFormField(
+                          style: const TextStyle(color: Colors.white),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your email';
+                            }
+                            return null;
+                          },
+                          decoration: const InputDecoration(
+                            border: UnderlineInputBorder(),
+                            labelText: 'Enter your email',
+                            labelStyle: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                        TextFormField(
+                          style: const TextStyle(color: Colors.white),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your password';
+                            }
+                            return null;
+                          },
+                          decoration: const InputDecoration(
+                            border: UnderlineInputBorder(),
+                            labelText: 'Enter your password',
+                            labelStyle: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                        TextFormField(
+                          style: const TextStyle(color: Colors.white),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your password again';
+                            }
+                            return null;
+                          },
+                          decoration: const InputDecoration(
+                            border: UnderlineInputBorder(),
+                            labelText: 'Enter your password again',
+                            labelStyle: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  TextFormField(
-                    style: const TextStyle(color: Colors.white),
-                    decoration: const InputDecoration(
-                      border: UnderlineInputBorder(),
-                      labelText: 'Enter your email',
-                      labelStyle: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                  TextFormField(
-                    style: const TextStyle(color: Colors.white),
-                    decoration: const InputDecoration(
-                      border: UnderlineInputBorder(),
-                      labelText: 'Enter your password',
-                      labelStyle: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                  TextFormField(
-                    style: const TextStyle(color: Colors.white),
-                    decoration: const InputDecoration(
-                      border: UnderlineInputBorder(),
-                      labelText: 'Enter your password again',
-                      labelStyle: TextStyle(color: Colors.white),
-                    ),
-                  ),
+
                   Padding(
                     padding: const EdgeInsets.only(top: 20.0),
                     child: FloatingActionButton(
                       onPressed: () {
-                        // Action à effectuer lors de l'appui sur le bouton "Create Account"
+                        if (_formKey.currentState!.validate()) {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => MovieListView(
-                                    movies: this.movies,
-                                  )),
+                                movies: this.movies,
+                              )),
                         );
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Account created')),
+                        );
+                      }
+
                       },
                       child: const Text("Create Account"),
                     ),
@@ -107,7 +145,7 @@ class CreateAccountPage extends StatelessWidget {
                           MaterialPageRoute(builder: (context) => LoginPage(movies : movies)),
                         );
                       },
-                      child: Text(
+                      child: const Text(
                         "Already have an account ?",
                         style: TextStyle(color: Colors.white),
                       ),
