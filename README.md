@@ -33,4 +33,5 @@ flutter_svg - Package Flutter pour afficher des images SVG.
 
 ## API 
 L'application est connectée à une API qui permet de récupérer des données sur les films (nom, affiche, description ...).
+
 API : https://developer.themoviedb.org/reference/intro/getting-started
