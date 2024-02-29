@@ -1,3 +1,4 @@
+Projet de BARBIER Lucas , DEGRANDE Samuel , BELKAID Jawad
 # Cinemapp
 
 Cinemapp est une application mobile qui vous permet de rechercher, explorer et sauvegarder vos films préférés.
@@ -29,3 +30,7 @@ Cloner ce dépôt :
 Flutter - SDK pour le développement d'applications multiplateformes.  
 http - Package Flutter pour effectuer des requêtes HTTP.  
 flutter_svg - Package Flutter pour afficher des images SVG.  
+
+## API 
+L'application est connectée à une API qui permet de récupérer des données sur les films (nom, affiche, description ...).
+API : https://developer.themoviedb.org/reference/intro/getting-started
